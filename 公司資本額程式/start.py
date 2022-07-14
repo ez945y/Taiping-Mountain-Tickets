@@ -98,7 +98,7 @@ for number in df['統編號碼']:
           print('實收資本額(元) : ', "查無")
 
       n_all += 1
-      if n_all == 10:
+      if n_all == length:
         print('------------')
         break 
 
@@ -120,7 +120,7 @@ for number in df['統編號碼']:
         list3.append("查無")
 
       sleep(2)
-      if n_all == 10:
+      if n_all == length:
         print('------------')
         break 
 
