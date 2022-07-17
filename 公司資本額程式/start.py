@@ -24,6 +24,8 @@ driver.maximize_window()
 with open("./number.csv",encoding="utf-8") as f:
     df=pd.read_csv(f)
 
+df['統編號碼'] = df['統編號碼'].astype(str)
+
 list1 = []
 list2 = []
 list3 = []
@@ -35,12 +37,15 @@ print('      開始作業')
 print('------',n_all + 1,"/",length,'------') 
 for number in df['統編號碼']:
     try:
+      number = (8 - len(number)) * '0' + number
+      print(number)
       driver.get('https://findbiz.nat.gov.tw/fts/query/QueryList/queryList.do') #開啟網站
       sleep(2)
       if n_all == 0:
         driver.find_element("xpath",'//*[@id="queryListForm"]/div[1]/div[1]/div/div[4]/div[2]/div/div/div/input[3]').click()
         driver.find_element("xpath",'//*[@id="queryListForm"]/div[1]/div[1]/div/div[4]/div[2]/div/div/div/input[5]').click()
         driver.find_element("xpath",'//*[@id="queryListForm"]/div[1]/div[1]/div/div[4]/div[2]/div/div/div/input[9]').click()
+        driver.find_element("xpath",'//*[@id="isAliveY"]').click()
       driver.find_element("xpath",'//*[@id="qryCond"]').send_keys(number)
       driver.find_element("xpath",'//*[@id="qryBtn"]').click()
       sleep(1)
@@ -133,4 +138,3 @@ df['資本總額(元)'] = pd.Series(list2)
 df['實收資本額(元)'] = pd.Series(list3)
 
 df.to_csv("work_coumplete.csv", index = False)
-
